@@ -14,6 +14,17 @@ export const addVote = (id) => {
     data: { id }
   }
 }
+
+export const addAnec = (content) => {
+  return {
+    type: 'ADD_ANEC',
+    data: { 
+      content: content,
+      id: getId(),
+      votes: 0
+     }
+  }
+}
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const asObject = (anecdote) => {
@@ -41,10 +52,12 @@ const reducer = (state = initialState, action) => {
         votes: anecToUpdate.votes + 1
       }
       console.log('updatedAnec is', updatedAnec)
-
       return state.map((anecdote) => 
         anecdote.id !== id ? anecdote : updatedAnec
       )
+      case 'ADD_ANEC':
+        console.log('action.data is', action.data)
+        return [...state, action.data]
       default: 
         return state
   }
