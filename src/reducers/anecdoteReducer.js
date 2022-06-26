@@ -52,11 +52,18 @@ const reducer = (state = initialState, action) => {
         votes: anecToUpdate.votes + 1
       }
       console.log('updatedAnec is', updatedAnec)
+      for(let i = 0; i < state.length; i++){
+        if(state[i].id === id){
+          state[i] = updatedAnec
+        }
+      }
+      state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
       return state.map((anecdote) => 
         anecdote.id !== id ? anecdote : updatedAnec
       )
       case 'ADD_ANEC':
         console.log('action.data is', action.data)
+        state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
         return [...state, action.data]
       default: 
         return state
