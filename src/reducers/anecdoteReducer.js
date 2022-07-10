@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit'
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -6,25 +8,6 @@ const anecdotesAtStart = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
-
-export const addVote = (id) => {
-
-  return {
-    type: 'INCREMENT_VOTE',
-    data: { id }
-  }
-}
-
-export const addAnec = (content) => {
-  return {
-    type: 'ADD_ANEC',
-    data: { 
-      content: content,
-      id: getId(),
-      votes: 0
-     }
-  }
-}
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const asObject = (anecdote) => {
@@ -38,13 +21,12 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-
-  switch(action.type) {
-    case 'INCREMENT_VOTE':
-      const id = action.data.id
+const anecdoteSlice = createSlice({
+  name: 'anecdotes', 
+  initialState,
+  reducers: {
+    addVote(state, action){
+      const id = action.payload
       const anecToUpdate = state.find(n => n.id === id)
       console.log('anecToUpdate is', anecToUpdate)
       const updatedAnec = {
@@ -58,16 +40,20 @@ const reducer = (state = initialState, action) => {
         }
       }
       state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
-      return state.map((anecdote) => 
-        anecdote.id !== id ? anecdote : updatedAnec
-      )
-      case 'ADD_ANEC':
-        console.log('action.data is', action.data)
-        state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
-        return [...state, action.data]
-      default: 
-        return state
+      return state
+    },
+    addAnec(state,action){
+      console.log('action.data is', action.payload)
+      const content = action.payload
+      state.push({
+        content,
+        id: getId(),
+        votes: 0
+      })
+      return state
+    }
   }
-}
+})
 
-export default reducer
+export default anecdoteSlice.reducer
+export const { addAnec, addVote } = anecdoteSlice.actions

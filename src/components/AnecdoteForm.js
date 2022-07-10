@@ -1,8 +1,9 @@
 import {  addAnec } from '../reducers/anecdoteReducer'
+// import { addAnec } 
 import { useSelector, useDispatch } from 'react-redux'
 
 const AnecdoteForm = () => {
-    const anecdotes = useSelector(state => state)
+    const anecdotes = useSelector(state => state.anecdotes)
     const dispatch = useDispatch()
 
     const addNewAnec = (event) => {
