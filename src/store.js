@@ -1,11 +1,17 @@
-import reducer from './reducers/anecdoteReducer'
-import { configureStore } from '@reduxjs/toolkit'
+import anecdoteReducer from './reducers/anecdoteReducer'
+import notificationSlice from './reducers/notificationReducer'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 
-const store = configureStore({
-    reducer: {
-        anecdotes: reducer
-    }
+const combinedReducer = combineReducers({
+    anecdotes: anecdoteReducer,
+    notifications: notificationSlice
 })
+// const store = configureStore({
+//     reducer: {
+//         anecdotes: reducer
+//     }
+// })
+const store = configureStore({reducer: combinedReducer})
 
 console.log("STORE IS ", store.getState())
 
