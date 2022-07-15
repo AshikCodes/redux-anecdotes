@@ -26,20 +26,31 @@ const anecdoteSlice = createSlice({
   name: 'anecdotes', 
   initialState: [],
   reducers: {
-    addVote(state, action){
-      const id = action.payload
-      const anecToUpdate = state.find(n => n.id === id)
-      console.log('anecToUpdate is', anecToUpdate)
-      const updatedAnec = {
-        ...anecToUpdate,
-        votes: anecToUpdate.votes + 1
-      }
-      console.log('updatedAnec is', updatedAnec)
-      for(let i = 0; i < state.length; i++){
-        if(state[i].id === id){
-          state[i] = updatedAnec
+    // addVote(state, action){
+    //   const id = action.payload
+    //   const anecToUpdate = state.find(n => n.id === id)
+    //   console.log('anecToUpdate is', anecToUpdate)
+    //   const updatedAnec = {
+    //     ...anecToUpdate,
+    //     votes: anecToUpdate.votes + 1
+    //   }
+    //   console.log('updatedAnec is', updatedAnec)
+    //   for(let i = 0; i < state.length; i++){
+    //     if(state[i].id === id){
+    //       state[i] = updatedAnec
+    //     }
+    //   }
+    //   state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
+    //   return state
+    // },
+    orderedAnecs(state,action) {
+      const updatedAnec = action.payload
+      console.log(`UPDATED ANEC HERE IS ${updatedAnec}`)
+        for(let i = 0; i < state.length; i++){
+          if(state[i].id === updatedAnec.id){
+              state[i] = updatedAnec
+            }
         }
-      }
       state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
       return state
     },
@@ -52,12 +63,21 @@ const anecdoteSlice = createSlice({
   }
 })
 
-export const {  addVote, appendAnec, setAnecs } = anecdoteSlice.actions
+export const { orderedAnecs, appendAnec, setAnecs } = anecdoteSlice.actions
 
 export const initializeAnecs = () => {
   return async (dispatch) => {
     const anecs = await anecService.getAll()
-    dispatch(setAnecs(anecs))
+    const sortedAnecs = anecs.sort((a,b) => parseFloat(b.votes) - parseFloat(a.votes))
+    dispatch(setAnecs(sortedAnecs))
+  }
+}
+
+export const addVote = (anecdote) => {
+  return async (dispatch) => {
+    const updatedAnec = await anecService.incrementVote(anecdote)
+    console.log(`updatedAnec is ${updatedAnec}`)
+    dispatch(orderedAnecs(updatedAnec))
   }
 }
 

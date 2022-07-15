@@ -9,7 +9,6 @@ const AnecdoteList = () => {
 
     if(filter[0] !== ''){
         console.log('got it')
-        // console.log(`filteredAnecs is ${filter[0]}`)
         for(let i = 0; i < anecdotes.length; i++){
             if(anecdotes[i].content.startsWith(filter[0])){
                 console.log(`MATCH: ${anecdotes[i].content}`)
@@ -20,9 +19,10 @@ const AnecdoteList = () => {
     }
     const dispatch = useDispatch()
 
-    const vote = (id, anec) => {
+    const vote = (id, anec, anecdote) => {
         console.log('vote', id)
-        dispatch(addVote(id))
+        // dispatch(addVote(id))
+        dispatch(addVote(anecdote))
         dispatch(addNotiForVoteClk(anec))
         setTimeout(() => {
             dispatch(removeNotiForVoteClk())
@@ -38,7 +38,7 @@ const AnecdoteList = () => {
             </div>
             <div>
                 has {anecdote.votes}
-                <button onClick={() => vote(anecdote.id, anecdote.content)}>votes</button>
+                <button onClick={() => vote(anecdote.id, anecdote.content, anecdote)}>votes</button>
             </div>
             </div>
         ) : filteredAnecs.map(filteredAnec => 
