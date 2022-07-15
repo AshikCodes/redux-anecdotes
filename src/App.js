@@ -6,15 +6,14 @@ import Notification from './components/Notification'
 import anecService from './services/anecdote'
 import { setAnecs } from './reducers/anecdoteReducer'
 import { useEffect } from 'react'
+import { initializeAnecs } from './reducers/anecdoteReducer'
 
 const App = () => {
 const dispatch = useDispatch()
 
 useEffect(() => {
-  anecService.getAll().then((anecdotes) => {
-    dispatch(setAnecs(anecdotes))
-  })
-}, [dispatch])
+  dispatch(initializeAnecs())
+},[dispatch])
 
 
   return (

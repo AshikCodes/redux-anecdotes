@@ -6,7 +6,6 @@ import App from './App'
 import reducer from './reducers/anecdoteReducer'
 import store from './store'
 
-// const store = createStore(reducer)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>

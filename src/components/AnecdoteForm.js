@@ -1,5 +1,5 @@
 import {  addAnec } from '../reducers/anecdoteReducer'
-// import { addAnec } 
+
 import anecService from '../services/anecdote'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -11,8 +11,7 @@ const AnecdoteForm = () => {
         event.preventDefault()
         const anec = event.target.anec.value
         event.target.anec.value = ''
-        const newAnec = await anecService.createNew(anec)
-        dispatch(addAnec(newAnec))
+        dispatch(addAnec(anec))
       }
     return ( 
         <div className="anec-form">
