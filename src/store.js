@@ -1,7 +1,8 @@
-import anecdoteReducer from './reducers/anecdoteReducer'
+import anecdoteReducer,{ setAnecs } from './reducers/anecdoteReducer'
 import notificationSlice from './reducers/notificationReducer'
 import filterSlice from './reducers/filterReducer'
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import anecService from './services/anecdote'
 
 const combinedReducer = combineReducers({
     anecdotes: anecdoteReducer,
@@ -14,6 +15,11 @@ const combinedReducer = combineReducers({
 //     }
 // })
 const store = configureStore({reducer: combinedReducer})
+
+anecService.getAll().then((anecdotes) => {
+        store.dispatch(setAnecs(anecdotes))
+})
+
 
 console.log("STORE IS ", store.getState())
 
