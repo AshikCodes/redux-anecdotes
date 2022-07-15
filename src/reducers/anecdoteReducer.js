@@ -19,7 +19,7 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
+// const initialState = anecdotesAtStart.map(asObject)
 
 const anecdoteSlice = createSlice({
   name: 'anecdotes', 
@@ -44,14 +44,8 @@ const anecdoteSlice = createSlice({
       return state
     },
     addAnec(state,action){
-      console.log('action.data is', action.payload)
-      const content = action.payload
-      state.push({
-        content,
-        id: getId(),
-        votes: 0
-      })
-      return state
+      console.log(`action.payload is ${action.payload}`)
+      state.push(action.payload)
     },
     appendAnec(state,action) {
       state.push(action.payload)

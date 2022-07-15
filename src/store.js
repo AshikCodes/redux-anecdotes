@@ -16,11 +16,6 @@ const combinedReducer = combineReducers({
 // })
 const store = configureStore({reducer: combinedReducer})
 
-anecService.getAll().then((anecdotes) => {
-        store.dispatch(setAnecs(anecdotes))
-})
-
-
 console.log("STORE IS ", store.getState())
 
 export default store
