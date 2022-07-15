@@ -61,6 +61,7 @@ export const initializeAnecs = () => {
   }
 }
 
+//added addAnec using async action creator
 export const addAnec = (content) => {
   return async (dispatch) => {
     const newAnec = await anecService.createNew(content)
