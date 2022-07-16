@@ -26,23 +26,6 @@ const anecdoteSlice = createSlice({
   name: 'anecdotes', 
   initialState: [],
   reducers: {
-    // addVote(state, action){
-    //   const id = action.payload
-    //   const anecToUpdate = state.find(n => n.id === id)
-    //   console.log('anecToUpdate is', anecToUpdate)
-    //   const updatedAnec = {
-    //     ...anecToUpdate,
-    //     votes: anecToUpdate.votes + 1
-    //   }
-    //   console.log('updatedAnec is', updatedAnec)
-    //   for(let i = 0; i < state.length; i++){
-    //     if(state[i].id === id){
-    //       state[i] = updatedAnec
-    //     }
-    //   }
-    //   state.sort((a,b) => parseInt(b.votes) - parseInt(a.votes))
-    //   return state
-    // },
     orderedAnecs(state,action) {
       const updatedAnec = action.payload
       console.log(`UPDATED ANEC HERE IS ${updatedAnec}`)
