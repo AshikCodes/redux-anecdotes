@@ -17,8 +17,6 @@ const notificationSlice = createSlice({
     initialState,
     reducers:{
         addNotiForVoteClk(state,action){
-            // const anecClicked = action.payload
-            // var msg = `you voted '${anecClicked}'`
             const msg = action.payload
             state[0].content = msg
         },   
