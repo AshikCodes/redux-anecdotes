@@ -1,17 +1,17 @@
 import {  addAnec } from '../reducers/anecdoteReducer'
+import { connect } from 'react-redux'
 
 import anecService from '../services/anecdote'
 import { useSelector, useDispatch } from 'react-redux'
 
-const AnecdoteForm = () => {
-    const anecdotes = useSelector(state => state.anecdotes)
-    const dispatch = useDispatch()
+const AnecdoteForm = (props) => {
+    const anecdotes = props.anecdotes
 
     const addNewAnec = async (event) => {
         event.preventDefault()
         const anec = event.target.anec.value
         event.target.anec.value = ''
-        dispatch(addAnec(anec))
+        props.addAnec(anec)
       }
     return ( 
         <div className="anec-form">
@@ -23,5 +23,17 @@ const AnecdoteForm = () => {
         </div>
      );
 }
- 
-export default AnecdoteForm;
+
+const mapStateToProps = (state) => {
+    return {
+        anecdotes: state.anecdotes
+    }
+}
+
+const mapDispatchToProps = {
+    addAnec
+}
+
+const ConnectedAnecdoteForm = connect(mapStateToProps,mapDispatchToProps)(AnecdoteForm)
+
+export default ConnectedAnecdoteForm;

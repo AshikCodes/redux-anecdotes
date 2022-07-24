@@ -1,13 +1,11 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, connect } from 'react-redux'
 import { filterList } from '../reducers/filterReducer'
 
-const Filter = () => {
-    const filtered = useSelector(state => state.filter)
-    const dispatch = useDispatch()
+const Filter = (props) => {
+    const filtered = props.filter
 
     const handleChange = (event) => {
-      // input-field value is in variable event.target.value    
-      dispatch(filterList(event.target.value))
+      props.filterList(event.target.value)
 
     }
     const style = {
@@ -20,5 +18,18 @@ const Filter = () => {
       </div>
     )
   }
+
+  const mapStateToProps = (state) => {
+    return {
+      filter: state.filter
+    }
+  }
+
+  const mapDispatchToProps = {
+    filterList
+  }
   
-  export default Filter
+  const ConnectedFilter = connect(mapStateToProps,mapDispatchToProps)(Filter)
+
+  export default ConnectedFilter
+  // export default Filter
